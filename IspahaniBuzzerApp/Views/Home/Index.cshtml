@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="home position-relative">
+    <div class="container">
+        <div class="col-lg-12">
+            <div class="home-text-div position-absolute">
+                <p class="text-uppercase home-text-main">Inter &nbsp; Ispahani &nbsp; Schools </br> ICT &amp; &nbsp; Math &nbsp; Olympiad &nbsp; 2019</p>
+                @if (ViewBag.UserId == "8e09035f-c640-4ac0-8d5c-4a63d3eddfab")
+                {
+                    <a class="btn-exam" href="/exams">Exam</a>
+                }
+
+            </div>
+            <div class="home-plane-div position-relative">
+                <img class="position-absolute" src="~/img/home/want_to_believe.png" alt="..." />
+            </div>
+            <div class="home-cloud1-div position-relative">
+                <img class="position-absolute" src="~/img/home/cloud_1.png" alt="..." />
+            </div>
+            @*<div class="home-cloud2-div position-relative">
+                    <img class="position-absolute" src="~/img/home/cloud_2.png" alt="Alternate Text" />
+                </div>*@
+            <div class="home-cloud3-div position-relative">
+                <img class="position-absolute" src="~/img/home/cloud_3.png" alt="..." />
+            </div>
+            @*<div class="home-butterfly1-div position-relative">
+                    <img class="position-absolute" src="~/img/home/butterfly_1.png" alt="Alternate Text" />
+                </div>
+                <div class="home-butterfly2-div position-relative">
+                    <img class="position-absolute" src="~/img/home/butterfly_2.png" alt="Alternate Text" />
+                </div>*@
+        </div>
+    </div>
+</section>

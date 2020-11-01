@@ -1,0 +1,353 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Dynamo.Model.Common.Authentication.ApplicationUser> SignInManager
+@inject UserManager<Dynamo.Model.Common.Authentication.ApplicationUser> UserManager
+@{
+
+    var userId = User;
+}
+@{
+    ViewData["Title"] = "Buzzer";
+}
+
+@section Sole {
+    <link href="~/css/buzzer-button.css" rel="stylesheet" />
+    <style>
+
+        .exam-table-section {
+            margin-top: 4.7rem;
+            background-image: url("/img/home/bg-1.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            padding-bottom: 150px;
+        }
+
+        .card {
+            border-radius: 10px;
+            padding: 42px 35px;
+            font-family: 'Baloo Da', cursive;
+            font-size: 40px;
+        }
+
+        .card-option {
+            font-size: 25px;
+        }
+
+        .question-no {
+            font-size: 60px;
+            font-family: 'Baloo Da', cursive;
+        }
+
+        .img-copter {
+            right: 2%;
+            bottom: 130px;
+            transform: rotate(-15deg);
+            width: 200px;
+        }
+
+        .img-cloud1 {
+            top: 60px;
+            left: 1%;
+            width: 200px
+        }
+
+        .bubbly-button {
+            background-color: #2DCE89;
+        }
+
+            .bubbly-button:disabled {
+                background-color: #ff0081;
+            }
+    </style>
+}
+
+<section class="exam-table-section">
+    <div class="container">
+        <div class="text-center">
+            <img class="position-absolute img-copter" src="~/img/svg/kite.svg" alt="..." />
+            <img class="position-absolute img-cloud1" src="~/img/svg/pinwheel.svg" alt="..." />
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h2 class="text-white question-no mt-3 mb-3">Question</h2>
+                <div class="card mt-3 mb-4">
+                    <div class="card-body" id="question_card"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="buzzer_option1" class="card options mb-3 card-option p-3 d-none"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="buzzer_option2" class="card options mb-3 card-option p-3 d-none"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="buzzer_option3" class="card options mb-4 card-option p-3 d-none"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="buzzer_option4" class="card options mb-4 card-option p-3 d-none"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="btn-group">
+                        @if (ViewBag.UserId == "3bb02f23-930a-40dd-8148-52e2645fdd71")
+                        {
+                            @*<input id="buzzer_1" disabled type="button" class="btn btn-exam" value=" Buzzer" />*@
+                            <button disabled id="buzzer_1" class="bubbly-button">Buzzer!</button>
+                            <input id="buzzer_2" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_3" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_4" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_5" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_6" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                        }
+                        @if (ViewBag.UserId == "10357147-691e-4af6-bc2d-dca7b264050b")
+                        {
+
+                            <input id="buzzer_1" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <button disabled id="buzzer_2" class="bubbly-button">Buzzer!</button>
+
+                            <input id="buzzer_3" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_4" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_5" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_6" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                        }
+                        @if (ViewBag.UserId == "3a3b7b2b-26e8-4c03-ba7d-d31f507359d0")
+                        {
+                            <input id="buzzer_1" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_2" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+
+                            <button disabled id="buzzer_3" class="bubbly-button">Buzzer!</button>
+                            <input id="buzzer_4" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_5" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_6" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+
+                        }
+                        @if (ViewBag.UserId == "f78a5700-2be1-4e04-a8eb-569ce9985cdc")
+                        {
+                            <input id="buzzer_1" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_2" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_3" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+
+                            <button disabled id="buzzer_4" class="bubbly-button">Buzzer!</button>
+                            <input id="buzzer_5" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_6" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                        }
+                        @if (ViewBag.UserId == "101fc180-23ad-47ca-9c7f-c456aeb40edc")
+                        {
+                            <input id="buzzer_1" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_2" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_3" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_4" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+
+                            <button disabled id="buzzer_5" class="bubbly-button">Buzzer!</button>
+                            <input id="buzzer_6" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+
+                        }
+                        @if (ViewBag.UserId == "7aee2ac4-ff3b-4351-83ea-1c11c1e2bb46")
+                        {
+                            <input id="buzzer_1" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_2" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_3" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_4" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <input id="buzzer_5" hidden disabled type="button" class="btn btn-primary" value=" Buzzer" />
+                            <button disabled id="buzzer_6" class="bubbly-button">Buzzer!</button>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+
+
+            $('#buzzer_1').on('click', function () {
+
+                $('#buzzer_1').attr("disabled", true);
+                var url = '@Url.Action("BuzzerPress", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+
+                        buzzerId: 1,
+                    },
+                    cache: false,
+                    success: function (result) {
+
+                        connection.invoke("PressBuzzers").catch(function (err) {
+                            return console.error(err.toString());
+                        });
+
+                    }
+                });
+            });
+
+
+            $('#buzzer_2').on('click', function () {
+                $('#buzzer_2').attr("disabled", true);
+                var url = '@Url.Action("BuzzerPress", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+
+                        buzzerId: 2,
+                    },
+                    cache: false,
+                    success: function (result) {
+                        connection.invoke("PressBuzzers").catch(function (err) {
+                            return console.error(err.toString());
+                        });
+
+                    }
+                });
+            });
+
+
+            $('#buzzer_3').on('click', function () {
+                $('#buzzer_3').attr("disabled", true);
+                var url = '@Url.Action("BuzzerPress", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+                        buzzerId: 3,
+                    },
+                    cache: false,
+                    success: function (result) {
+                        connection.invoke("PressBuzzers").catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    }
+                });
+
+            });
+
+            $('#buzzer_4').on('click', function () {
+                $('#buzzer_4').attr("disabled", true);
+                var url = '@Url.Action("BuzzerPress", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+                        buzzerId: 4,
+                    },
+                    cache: false,
+                    success: function (result) {
+                        connection.invoke("PressBuzzers").catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    }
+                });
+            });
+
+
+            $('#buzzer_5').on('click', function () {
+                $('#buzzer_5').attr("disabled", true);
+                var url = '@Url.Action("BuzzerPress", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+                        buzzerId: 5,
+                    },
+
+                    cache: false,
+                    success: function (result) {
+
+                        connection.invoke("PressBuzzers").catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    }
+                });
+
+            });
+
+
+            $('#buzzer_6').on('click', function () {
+                $('#buzzer_6').attr("disabled", true);
+                var url = '@Url.Action("BuzzerPress", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+                        buzzerId: 6,
+                    },
+                    cache: false,
+                    success: function (result) {
+                        connection.invoke("PressBuzzers").catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    }
+                });
+            });
+
+
+            function getChatNumber() {
+
+                //alert("f");
+
+            }
+
+
+            var connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
+            connection.on("Receive", function (user, message) {
+                getChatNumber();
+            });
+            connection.start().then(function () {
+
+
+
+            }).catch(function (err) {
+
+                return console.error(err.toString());
+            });
+
+        });
+
+
+
+
+    </script>
+    <script type="text/javascript">
+        var animateButton = function (e) {
+
+            e.preventDefault;
+            //reset animation
+            e.target.classList.remove('animate');
+
+            e.target.classList.add('animate');
+            setTimeout(function () {
+                e.target.classList.remove('animate');
+            }, 500);
+        };
+
+        var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+        for (var i = 0; i < bubblyButtons.length; i++) {
+            bubblyButtons[i].addEventListener('click', animateButton, false);
+        }
+    </script>
+
+}
+
+
+

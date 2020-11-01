@@ -1,0 +1,107 @@
+﻿@model Dynamo.Model.Exam.Exam
+
+@{
+    ViewData["Title"] = "Edit Exam Name";
+}
+
+@section Css {
+    <link rel="stylesheet" href="~/vendor/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="~/vendor/sweetalert2/dist/sweetalert2.min.css">
+}
+
+@section Sole {
+    <style>
+        .exam-section {
+            margin-top: 4.7rem;
+        }
+
+            .exam-section h1 {
+                font-family: "Fredoka One",cursive;
+                font-size: 2.8em;
+                line-height: 1.15em;
+            }
+
+        .exam-table-section {
+            background-image: url("/img/bg-2.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            padding-bottom: 150px;
+        }
+
+        .exam-table-heading {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.333em;
+            color: #023661;
+        }
+
+        .img-copter {
+            /*right: 5%;
+            top: 18%;
+            transform: rotate(-18deg);*/
+            right: 2%;
+            bottom: 18%;
+            transform: rotate(-15deg);
+        }
+
+        .img-cloud1 {
+            top: -20%;
+            left: 3%;
+            animation-name: floating;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+
+        .exam-id {
+            color: #969899;
+            border: 2px solid #f0f0f0 !important;
+            padding: 0 1.5em;
+            font-size: 18px;
+            font-style: normal;
+            text-transform: capitalize;
+            height: 62px;
+            width: 400px;
+        }
+
+        .backtolist {
+            height: 62px;
+            padding: 1.3rem 3em !important;
+            font-size: 18px !important;
+            line-height: 16px !important;
+        }
+    </style>
+}
+
+<section class="exam-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10"></div>
+        </div>
+    </div>
+</section>
+
+<section class="exam-table-section">
+    <div class="container-fluid">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="text-center mb-4">
+                <p class="text-uppercase exam-table-heading pt-5">Edit &nbsp; Exam &nbsp; Name</p>
+                <div class="d-flex justify-content-center">
+                    <input asp-for="Name" class="text-center form-control rounded-pill exam-id" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input type="submit" value="Save" class="btn btn-danger rounded-pill backtolist ml-3 text-uppercase" />
+                    <a class="btn btn-warning rounded-pill backtolist ml-3 text-uppercase" asp-action="Index">Back to list</a>
+                </div>
+
+                <img class="position-absolute img-copter" src="~/img/home/plain.png" alt="..." />
+                <img class="position-absolute img-cloud1" src="~/img/home/cloud_1.png" alt="..." />
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewData["Title"] = "StartView";
+}
+
+@section Sole {
+    <link href="~/css/buzzer-button.css" rel="stylesheet" />
+    <style>
+        .exam-section {
+            margin-top: 4.7rem;
+        }
+
+            .exam-section h1 {
+                font-family: "Fredoka One",cursive;
+                font-size: 2.8em;
+                line-height: 1.15em;
+            }
+
+        .exam-table-section {
+            background-image: url("/img/home/bg-1.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            padding-bottom: 150px;
+        }
+
+        .card {
+            border-radius: 10px;
+            padding: 42px 35px;
+            font-family: 'Baloo Da', cursive;
+            font-size: 30px;
+        }
+
+        .question-no {
+            font-size: 60px;
+            font-family: 'Baloo Da', cursive;
+        }
+
+        .img-copter {
+            right: 7%;
+            bottom: 130px;
+            transform: rotate(-15deg);
+            width: 200px;
+        }
+
+        .img-cloud1 {
+            top: 60px;
+            left: 3%;
+            width: 200px
+        }
+        #startButton.bubbly-button {
+            padding: .5em 2em;
+        }
+    </style>
+}
+<section class="exam-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10"></div>
+        </div>
+    </div>
+</section>
+
+<section class="exam-table-section">
+    <div class="container">
+        <div class="text-center">
+            <img class="position-absolute img-copter" src="~/img/svg/kite.svg" alt="..." />
+            <img class="position-absolute img-cloud1" src="~/img/svg/pinwheel.svg" alt="..." />
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mt-5">
+                    <div class="btn-group mt-5">
+                        @*<input class="bubbly-button" id="startButton" type="button" name="option3" value="Start" />*@
+                        <button class="bubbly-button mt-5" id="startButton">Start!</button>
+                        <input class="form-control rounded-pill" id="examId" type="hidden" name="option3" value="@ViewBag.ExamId" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@section Scripts {
+    <script src="~/vendor/sweetalert2/dist/sweetalert2.min.js" asp-append-version="true"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('#startButton').on('click', function () {
+
+                var examId = $('#examId').val();
+                connection.invoke("StartMcqs", examId).catch(function (err) {
+
+                    return console.error(err.toString());
+
+                });
+
+
+            });
+            var connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
+
+            connection.start().then(function () {
+
+            }).catch(function (err) {
+
+                return console.error(err.toString());
+            });
+
+        });
+
+
+
+
+    </script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

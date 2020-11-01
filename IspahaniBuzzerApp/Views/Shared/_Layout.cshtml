@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@ViewData["Title"] - Ispahani Inter School Competetion | IT Partner: NeuroStorm</title>
+
+    <link asp-append-version="true" type="image/png" rel="icon" href="~/img/logo/Ispahani_logo.jpg">
+
+    <style>
+        body {
+            /*background: url("/img/texture/6.png") fixed repeat;*/
+            background-color: #fff !important;
+            color: #000;
+        }
+    </style>
+    @* fonts *@
+
+
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/fonts/FredokaOne/FredokaOne.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/fonts/ubuntu/ubuntu.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/fonts/BalooDa/BalooDa.css">
+
+
+
+
+
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/fonts/roboto/css.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/nucleo/css/nucleo.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/fontawesome/css/all.min.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/jquery-confirm/css/jquery-confirm.css">
+
+    @RenderSection("Css", required: false)
+
+    @* Style *@
+    <link asp-append-version="true" rel="stylesheet" href="~/vendor/animate.css/animate.min.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/css/main.css">
+    @*<link asp-append-version="true" rel="stylesheet" href="~/css/blue-gradient.css" asp-append-version="true" type="text/css">*@
+    <link asp-append-version="true" rel="stylesheet" href="~/css/style.css">
+
+    @RenderSection("Sole", required: false)
+</head>
+<body class="g-sidenav-pinned active-sidebar">
+
+    <div class="main-content" id="panel">
+
+        <partial name="_CookieConsentPartial" />
+
+        <main role="main" class="">
+
+            <partial name="_TopNavigation" />
+
+            @RenderBody()
+
+            @*<partial name="_Footer" />*@
+
+        </main>
+    </div>
+    @*<div class="position-fixed fixed-bottom sponser-div">
+        <div class="position-absolute ipsc-div">
+            <img class="d-inline" src="~/img/logo/ipsc_logo.png" alt="Alternate Text" />
+            <h2 class="d-inline mb-0 ml-3">Organized by: <span>IPSC</span></h2>
+        </div>
+        <div class="position-absolute ns-div">
+            <h2 class="d-inline mb-0">Developed by <span>NeuroStorm</span></h2>
+        </div>
+    </div>*@
+    <script asp-append-version="true" src="~/vendor/jquery/dist/jquery.min.js"></script>
+    <script asp-append-version="true" src="~/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script asp-append-version="true" src="~/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script asp-append-version="true" src="~/vendor/js-cookie/js.cookie.js"></script>
+
+    @RenderSection("datetimepicker", required: false)
+
+    <script asp-append-version="true" src="~/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script asp-append-version="true" src="~/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <script asp-append-version="true" src="~/lib/aspnet/signalr/dist/browser/signalr.js"></script>
+    <script asp-append-version="true" src="~/vendor/jquery-confirm/js/jquery-confirm.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+
+    <script asp-append-version="true" src="~/js/script.js"></script>
+    <script asp-append-version="true" src="~/js/site.js"></script>
+
+    <script>
+        $(function () {
+
+            $('.logout-confirm').confirm({
+                icon: 'fa fa-power-off',
+                title: 'Logout?',
+                theme: 'modern',
+                animation: 'zoom',
+                closeAnimation: 'zoom',
+                backgroundDismiss: true,
+                closeIcon: true,
+                type: 'blue',
+                buttons: {
+
+                    Yes: {
+                        text: 'yes',
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            location.href = this.$target.attr('href');
+                        },
+                    },
+                    no: {
+                        text: 'no',
+                        action: function () {
+                            //
+                        }
+                    }
+                }
+
+            });
+        });
+
+        $("#searchText").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#sidenav-main ul li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+    </script>
+</body>
+</html>

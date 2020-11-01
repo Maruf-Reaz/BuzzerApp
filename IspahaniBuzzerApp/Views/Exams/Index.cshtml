@@ -1,0 +1,270 @@
+﻿@model IEnumerable<Dynamo.Model.Exam.Exam>
+
+@{
+    ViewData["Title"] = "Exam List";
+}
+@section Sole {
+    <style>
+        .exam-section {
+            margin-top: 4.7rem;
+        }
+
+            .exam-section h1 {
+                font-family: "Fredoka One",cursive;
+                font-size: 2.8em;
+                line-height: 1.15em;
+            }
+
+        .exam-table-section {
+            background-image: url("/img/home/bg-1.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            padding-bottom: 150px;
+        }
+
+        .table td, .table th {
+            padding: 1rem !important;
+            font-size: 16px !important;
+            font-family: "Ubuntu",sans-serif;
+            font-weight: 500 !important;
+            letter-spacing: -0.17px !important;
+            text-transform: none !important;
+            vertical-align: middle;
+        }
+
+        .table td {
+            color: #4a4f53 !important;
+            border-color: #e1e2e2 !important;
+            border-top: 0 !important;
+            border-bottom: 0 !important;
+        }
+
+            .table td:first-child {
+                border-left: 0 !important;
+                color: #00AEAC !important;
+            }
+
+            .table td:last-child {
+                border-right: 0 !important;
+            }
+
+        .table th {
+            color: #ffffff;
+            background-color: #00AEAC;
+            border-color: #009DA6;
+            border-top: 0;
+        }
+
+        .table thead th {
+            border-bottom: 0 !important;
+        }
+
+        .table th:first-child {
+            border-left: 0 !important
+        }
+
+        .table th:last-child {
+            border-right: 0 !important
+        }
+
+        .table > tbody > tr:nth-child(2n) > td {
+            background-color: #f0f0f0 !important;
+        }
+
+        .table > tbody > tr:nth-child(2n+1) > td {
+            background-color: rgba(240,240,240,0.2);
+        }
+
+        .table-responsive {
+            border-radius: 5px;
+        }
+
+        .exam-table-heading {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.333em;
+            color: #fff;
+        }
+
+        .img-copter {
+            /*right: 5%;
+            top: 18%;
+            transform: rotate(-18deg);*/
+            right: 2%;
+            bottom: 180px;
+            transform: rotate(-15deg);
+        }
+
+        .img-cloud1 {
+            top: -150px;
+            left: 3%;
+            animation-name: floating;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+
+        .btn-primary {
+            background-color: #00AEAC;
+            border: 0;
+        }
+    </style>
+}
+
+<section class="exam-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10"></div>
+        </div>
+    </div>
+</section>
+<section class="exam-table-section">
+    <div class="container">
+        <div class="text-center">
+            <p class="text-uppercase exam-table-heading pt-5">Buzzer &nbsp;&amp&nbsp; Quiz &nbsp; Exam</p>
+            <input class="btn-exam create_exam mb-3" type="button" id="create_exam" name="create_exam" value="New Exam" />
+            <img class="position-absolute img-copter" src="~/img/home/plain.png" alt="..." />
+            <img class="position-absolute img-cloud1" src="~/img/home/cloud_1.png" alt="..." />
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>
+                                            Exam Type
+                                        </th>
+                                        <th class="text-center">
+                                            Options
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                            <td>
+                                                @if (item.TypeId == 1)
+                                                {
+                                                    <label>Buzzer</label>
+                                                }
+                                                else if (item.TypeId == 2)
+                                                {
+                                                    <label>MCQ</label>
+                                                }
+                                            </td>
+                                            <td class="">
+                                                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                                <a class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                <a class="btn btn-primary btn-sm" asp-action="AddQuestions" asp-route-examId="@item.Id">Questions</a>
+                                                @if (item.TypeId == 1)
+                                                {
+                                                    <a class="btn btn-primary btn-sm" asp-action="PlayBuzzer" asp-route-examId="@item.Id" asp-route-questionId="0">Play Buzzer</a>
+                                                    <a class="btn btn-primary btn-sm" asp-action="ResetExam">Reset Buzzer</a>
+                                                }
+                                                else if (item.TypeId == 2)
+                                                {
+                                                    <a class="btn btn-primary btn-sm" asp-action="PlayMcq" asp-route-examId="@item.Id">Play Quiz</a>
+                                                    <a class="btn btn-primary btn-sm" asp-action="ResetMcq" asp-route-examId="@item.Id">Reset Quiz</a>
+                                                }
+
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#create_exam').on('click', function () {
+
+
+                    $.confirm({
+                    title: 'Prompt !',
+                    theme: 'modern',
+                    animation: 'zoom',
+                    closeAnimation: 'zoom',
+                    backgroundDismiss: true,
+                    backgroundDismissAnimation: 'shake',
+                    closeIcon: true,
+                    content: '' +
+                        '<form action="" class="formName">' +
+                        '<div class="form-group">' +
+                        '<label>Please Enter Exam name</label>' +
+                        '<input type="text" id ="exam_name" placeholder="Exam name" class="exam_name form-control mb-3" required />' +
+                        '<select id = "exam_type_id" class="form-control sectionId js-single"><option value="0">Select Type</option>' +
+                        '<option value="1">Buzzer</option> <option value="2">Quiz</option></select>' +
+                        '</div>' +
+                        '</form>',
+                        buttons: {
+                            formSubmit: {
+                                text: 'Submit',
+                                btnClass: 'btn-primary',
+                                action: function () {
+
+                                    var exam_name = this.$content.find('#exam_name').val();
+                                    var exam_type_id = this.$content.find('#exam_type_id').val();
+
+
+                                    if (exam_name == null || exam_name == "" ) {
+
+                                        $.alert('Please Fill up Name');
+                                    }
+                                    else if (exam_type_id == 0) {
+                                        $.alert('Please Select Exam Type');
+                                    }
+                                    else
+                                    {
+                                        var url = '@Url.Action("AddExam", "Exams")';
+                                        $.ajax({
+                                            type: "POST",
+                                            dataType: 'json',
+                                            url: url,
+                                            data: {
+                                                name: exam_name,
+                                                typeId: exam_type_id,
+                                            },
+                                            cache: false,
+                                            success: function (result) {
+                                                location.href = '/Exams/AddQuestions?examId=' + result.id;
+                                            }
+                                        });
+                                    }
+                            // submit
+                            }
+                        },
+                    cancel: function () {
+                        //close
+                        },
+                    },
+
+                    backgroundDismiss: true,
+
+
+                });
+
+            });
+        });
+    </script>
+
+}

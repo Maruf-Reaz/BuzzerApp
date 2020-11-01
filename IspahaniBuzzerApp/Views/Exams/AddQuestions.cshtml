@@ -1,0 +1,537 @@
+﻿@model Dynamo.Model.P
+
+@{
+    ViewData["Title"] = "Add Question";
+}
+
+@section Css {
+    <link rel="stylesheet" href="~/vendor/sweetalert2/dist/sweetalert2.min.css">
+    <link href="~/vendor/fonts/Kiron/Kiron.css" rel="stylesheet" />
+}
+
+@section Sole {
+    <style>
+        .exam-table-section {
+            margin-top: 4.7rem;
+            background-image: url("/img/bg-2.svg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            padding-bottom: 150px;
+        }
+
+        .table td, .table th {
+            padding: 1rem !important;
+            letter-spacing: -0.17px !important;
+            text-transform: none !important;
+            vertical-align: middle;
+        }
+
+        .table th {
+            font-size: 16px !important;
+            color: #ffffff !important;
+            background-color: #00AEAC;
+            border-color: #009DA6;
+            border-top: 0 !important;
+            border-bottom: 0 !important;
+        }
+
+            .table th:first-child {
+                border-left: 0 !important
+            }
+
+            .table th:last-child {
+                border-right: 0 !important
+            }
+
+        .table td {
+            color: #4a4f53 !important;
+            border-color: #e1e2e2 !important;
+            border-top: 0 !important;
+        }
+
+        .table tr td input.form-control {
+            font-family: "Kiron", sans-serif;
+            color: #666;
+            font-size: 23px;
+        }
+
+        .table td:first-child {
+            border-left: 0 !important;
+            color: #ef5d50 !important;
+        }
+
+        .table td:last-child {
+            border-right: 0 !important;
+        }
+
+
+        .table > tbody > tr:nth-child(2n) > td {
+            background-color: #f0f0f0;
+        }
+
+        .table > tbody > tr:nth-child(2n+1) > td {
+            background-color: rgba(240,240,240,0.2);
+        }
+
+        .table-responsive {
+            border-radius: 5px;
+        }
+
+        .exam-table-heading {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.333em;
+            color: #023661;
+        }
+
+        .img-copter {
+            /*right: 5%;
+            top: 18%;
+            transform: rotate(-18deg);*/
+            right: 2%;
+            bottom: 100px;
+            transform: rotate(-15deg);
+        }
+
+        .img-cloud1 {
+            top: -170px;
+            left: 3%;
+            animation-name: floating;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+
+        .exam-id {
+            color: #969899;
+            border: 2px solid #f0f0f0 !important;
+            padding: 0 1.5em;
+            font-size: 18px;
+            font-style: normal;
+            text-transform: capitalize;
+            height: 62px;
+            width: 400px;
+        }
+
+        .backtolist {
+            height: 62px;
+            padding: 1.3rem 3em !important;
+            font-size: 18px !important;
+            line-height: 16px !important;
+        }
+
+        .canswer {
+            min-width: 150px;
+        }
+    </style>
+}
+
+<section class="exam-table-section">
+    <div class="container-fluid">
+        <div class="text-center mb-4">
+            <p class="text-uppercase exam-table-heading pt-5">Add &nbsp; Exam &nbsp; Question</p>
+            <div class="d-flex justify-content-center">
+                <input type="text" class="text-center form-control rounded-pill exam-id" name="name" value="@ViewBag.Exam.Name" disabled />
+                <a class="btn btn-warning rounded-pill backtolist ml-3 text-uppercase" asp-action="Index">Back to list</a>
+            </div>
+            <input type="hidden" class="form-control " id="examId" name="examId" value="@ViewBag.Exam.Id" />
+
+            <img class="position-absolute img-copter" src="~/img/home/plain.png" alt="..." />
+            <img class="position-absolute img-cloud1" src="~/img/home/cloud_1.png" alt="..." />
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered" id="main_table">
+                                        <thead class="">
+                                            <tr>
+                                                <th class="text-center text-wrap">Option 1</th>
+                                                <th class="text-center text-wrap">Option 2</th>
+                                                <th class="text-center text-wrap">Option 3</th>
+                                                <th class="text-center text-wrap">Option 4</th>
+                                                <th class="text-center text-wrap canswer">Correct Answer</th>
+                                                <th class="text-center text-wrap canswer">Answer</th>
+                                                <th class="text-center text-wrap">Action</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody id="table_body" class="table_body">
+                                            @foreach (var question in ViewBag.Questions)
+                                            {
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <input placeholder="Write your question..." class="form-control description rounded-pill" type="text" name="description" value="@question.Description" disabled />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (question.IsOption1Correct)
+                                                        {
+                                                            <input class="form-control option1 bg-success text-white rounded-pill" type="text" name="option1" value="@question.Option1" disabled />
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="form-control option1 rounded-pill" type="text" name="option1" value="@question.Option1" disabled />
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (question.IsOption2Correct)
+                                                        {
+                                                            <input class="form-control option2 bg-success text-white rounded-pill" type="text" name="option2" value="@question.Option2" disabled />
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="form-control option2 rounded-pill" type="text" name="option2" value="@question.Option2" disabled />
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (question.IsOption3Correct)
+                                                        {
+                                                            <input class="form-control option3 bg-success text-white rounded-pill" type="text" name="option3" value="@question.Option3" disabled />
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="form-control option3 rounded-pill" type="text" name="option3" value="@question.Option3" disabled />
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (question.IsOption4Correct)
+                                                        {
+                                                            <input class="form-control option4 bg-success text-white rounded-pill" type="text" name="option4" value="@question.Option4" disabled />
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="form-control option4 rounded-pill" type="text" name="option4" value="@question.Option4" disabled />
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control correct_answer js-single" disabled>
+                                                            @if (question.IsOption1Correct)
+                                                            {
+                                                                <option value="1" selected>Option 1</option>
+                                                                <option value="2">Option 2</option>
+                                                                <option value="3">Option 3</option>
+                                                                <option value="4">Option 4</option>
+                                                            }
+                                                            @if (question.IsOption2Correct)
+                                                            {
+                                                                <option value="1">Option 1</option>
+                                                                <option value="2" selected>Option 2</option>
+                                                                <option value="3">Option 3</option>
+                                                                <option value="4">Option 4</option>
+                                                            }
+                                                            @if (question.IsOption3Correct)
+                                                            {
+                                                                <option value="1">Option 1</option>
+                                                                <option value="2">Option 2</option>
+                                                                <option value="3" selected>Option 3</option>
+                                                                <option value="4">Option 4</option>
+                                                            }
+                                                            @if (question.IsOption4Correct)
+                                                            {
+                                                                <option value="1">Option 1</option>
+                                                                <option value="2">Option 2</option>
+                                                                <option value="3">Option 3</option>
+                                                                <option value="4" selected>Option 4</option>
+                                                            }
+
+
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control single_answer rounded-pill" type="text" name="single_answer" value="@question.Answer" disabled />
+
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="hidden" class="examQuestionId" name="examQuestionId" id="examQuestionId" value="@question.Id" />
+                                                        <input class="btn btn-success btn-sm save_button " type="button" name="save_button" id="save_button" value="Saved" disabled />
+                                                        <input class="btn btn-default btn-sm edit_button " type="button" name="edit_button" id="edit_button" value="Edit" />
+                                                        <input class="btn btn-danger btn-sm  delete_button " type="button" name="delete_button" id="delete_button" value="Delete" />
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                            <tr style="display:none">
+                                                <td>
+                                                    <input class="form-control" type="hidden" name="name" value="" />
+                                                </td>
+
+                                                <td>
+                                                    <input class="form-control workDescription" type="text" name="name" value="" />
+                                                </td>
+                                                <td>
+                                                    <select class="form-control sectionId" data-toggle="select">
+                                                        <option value="value">text</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="btn btn-default btn-sm save_button" type="button" name="save_button" id="save_button" value="Save" />
+
+                                                    <input type="hidden" class="status" name="status" id="status" value="1" />
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-center">
+                        <input class="btn-exam-white mt-3 add_new_button" type="button" name="name" id="add_new_button" value="Add Row">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/vendor/sweetalert2/dist/sweetalert2.min.js" asp-append-version="true"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(".add_new_button").on('click', function () {
+
+                var table = $('#main_table');
+                var lastRowStatus = table.find(' tr:last input.status').val();
+                if (lastRowStatus == 0) {
+                    swal({
+                        title: "Warning",
+                        text: "Fil up and Save the last row before adding new one!",
+                        type: "warning",
+                        showCancelButton: false,
+                        buttonsStyling: !1,
+                        confirmButtonClass: "btn btn-primary",
+                        confirmButtonText: "Ok"
+                    });
+                }
+                else {
+                    table.append(
+                        '<tr>' +
+                        '<td colspan="7"><input placeholder="Write your question..." class="form-control description rounded-pill" type="text" name="description" value="" /></td>' +
+                        '</tr>'+
+                            '<tr>' +
+                        '<td><input placeholder="Option 1" class="form-control option1 rounded-pill" type="text" name="option1" value="" /></td>' +
+                        '<td><input placeholder="Option 2" class="form-control option2 rounded-pill" type="text" name="option2" value="" /></td>' +
+                        '<td><input placeholder="Option 3" class="form-control option3 rounded-pill" type="text" name="option3" value="" /></td>' +
+                        '<td><input placeholder="Option 4" class="form-control option4 rounded-pill" type="text" name="option4" value="" /></td>' +
+
+                        '<td> <select class="form-control correct_answer js-single "> <option selected value="0">Correct Answer</option><option value="1">Option 1</option>' +
+                        //'<td><input placeholder="Image" class="form-control rounded-pill questionImage" type="file" name="questionImage" value="" /></td>' +
+                        '<option  value="2">Option 2</option><option  value="3">Option 3</option><option  value="4">Option 4</option></select ></td > ' +
+                        '<td><input placeholder="Answer" class="form-control single_answer rounded-pill" type="text" name="single_answer" value="" /></td>' +
+                        '<td class="text-center"><input class="btn btn-success btn-sm save_button" type="button" name="save_button" id="save_button" value="Save" /> ' +
+                        '<input class="btn btn-default btn-sm edit_button " type="button" name="edit_button" id="edit_button" hidden value="Edit" />' +
+                        '<input class="btn btn-danger btn-sm delete_button " type="button" name="delete_button" id="delete_button" hidden value="Delete" />' +
+                        '<input type="hidden" class="status" name="status" id="status" value="0" /> ' +
+                        '<input type="hidden" class="examQuestionId" name="v" id="examQuestionId" value="0" /> ' +
+                        '</div>' +
+                        '</tr>'
+                    );
+
+
+
+                    $('.save_button').on('click', function () {
+                        var examId = $("#examId").val();
+                        var row = $(this).closest('tr');
+                        var prevRow = row.prev('tr')
+                        var description = prevRow.find('.description').val();
+                        var option1 = row.find('.option1').val();
+                        var option2 = row.find('.option2').val();
+                        var option3 = row.find('.option3').val();
+                        var option4 = row.find('.option4').val();
+                        var correct_answer = row.find('.correct_answer').val();
+                        var examQuestionId = row.find('.examQuestionId').val();
+                        var single_answer = row.find('.single_answer').val();
+
+                        row.find('.status').val(1);
+                        $(this).val('Saved');
+                        $(this).attr("disabled", true);
+                        var url = '@Url.Action("AddExamQuestion", "Exams")';
+                        $.ajax({
+                            type: "POST",
+                            dataType: 'json',
+                            url: url,
+                            data: {
+                                examId: examId,
+                                description: description,
+                                option1: option1,
+                                option2: option2,
+                                option3: option3,
+                                option4: option4,
+                                correct_answer: correct_answer,
+                                examQuestionId: examQuestionId,
+                                single_answer: single_answer,
+                            },
+                            cache: false,
+                            success: function (result) {
+                                prevRow.find('.description').attr("disabled", true);
+                                row.find('.option1').attr("disabled", true);
+                                row.find('.option2').attr("disabled", true);
+                                row.find('.option3').attr("disabled", true);
+                                row.find('.option4').attr("disabled", true);
+                                row.find('.correct_answer').attr("disabled", true);
+                                row.find('.single_answer').attr("disabled", true);
+                                row.find('.examQuestionId').val(result);
+                                row.find('.edit_button').attr("hidden", false);
+                                row.find('.delete_button').attr("hidden", false);
+                                location.reload();
+                            }
+                        });
+                    });
+
+                    $('.edit_button').on('click', function () {
+                        var row = $(this).closest('tr');
+                        var prevRow = row.prev('tr')
+                        prevRow.find('.description').attr("disabled", false);
+                        row.find('.option1').attr("disabled", false);
+                        row.find('.option2').attr("disabled", false);
+                        row.find('.option3').attr("disabled", false);
+                        row.find('.option4').attr("disabled", false);
+                        row.find('.correct_answer').attr("disabled", false);
+                        row.find('.single_answer').attr("disabled", false);
+                        row.find('.save_button').attr("disabled", false);
+                        row.find('.save_button').val('Save');
+                    });
+                    $('.delete_button').on('click', function () {
+                        var row = $(this).closest('tr');
+                        var prevRow = row.prev('tr')
+                        var examQuestionId = row.find('.examQuestionId').val();
+                        row.remove();
+                        prevRow.remove();
+                        var url = '@Url.Action("DeleteQuestion", "Exams")';
+                        $.ajax({
+                            type: "POST",
+                            dataType: 'json',
+                            url: url,
+                            data: {
+                                id: examQuestionId,
+                            },
+                            cache: false,
+                            success: function (result) {
+                                swal({
+                                    title: "Succes",
+                                    text: "Question Deleted",
+                                    type: "danger",
+                                    showCancelButton: false,
+                                    buttonsStyling: !1,
+                                    confirmButtonClass: "btn btn-primary",
+                                    confirmButtonText: "Ok"
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+
+            $('.save_button').on('click', function () {
+
+                var examId = $("#examId").val();
+                var row = $(this).closest('tr');
+                var prevRow = row.prev('tr')
+                var description = prevRow.find('.description').val();
+                var option1 = row.find('.option1').val();
+                var option2 = row.find('.option2').val();
+                var option3 = row.find('.option3').val();
+                var option4 = row.find('.option4').val();
+                var correct_answer = row.find('.correct_answer').val();
+                var single_answer = row.find('.single_answer').val();
+                var examQuestionId = row.find('.examQuestionId').val();
+                row.find('.status').val(1);
+                $(this).val('Saved');
+                $(this).attr("disabled", true);
+                var url = '@Url.Action("AddExamQuestion", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+
+                    data: {
+                        examId: examId,
+                        description: description,
+                        option1: option1,
+                        option2: option2,
+                        option3: option3,
+                        option4: option4,
+                        correct_answer: correct_answer,
+                        examQuestionId: examQuestionId,
+                        single_answer: single_answer,
+                    },
+                    cache: false,
+                    success: function (result) {
+                        prevRow.find('.description').attr("disabled", true);
+                        row.find('.option1').attr("disabled", true);
+                        row.find('.option2').attr("disabled", true);
+                        row.find('.option3').attr("disabled", true);
+                        row.find('.option4').attr("disabled", true);
+                        row.find('.correct_answer').attr("disabled", true);
+                        row.find('.single_answer').attr("disabled", true);
+                        row.find('.examQuestionId').val(result);
+                        row.find('.edit_button').attr("hidden", false);
+                        row.find('.delete_button').attr("hidden", false);
+                        location.reload();
+                    }
+                });
+            });
+
+            $('.edit_button').on('click', function () {
+                var row = $(this).closest('tr');
+                var prevRow = row.prev('tr')
+                prevRow.find('.description').attr("disabled", false);
+                row.find('.option1').attr("disabled", false);
+                row.find('.option2').attr("disabled", false);
+                row.find('.option3').attr("disabled", false);
+                row.find('.option4').attr("disabled", false);
+                row.find('.correct_answer').attr("disabled", false);
+                row.find('.single_answer').attr("disabled", false);
+                row.find('.save_button').attr("disabled", false);
+                row.find('.save_button').val('Save');
+            });
+            $('.delete_button').on('click', function () {
+                var row = $(this).closest('tr');
+                var prevRow = row.prev('tr')
+                var examQuestionId = row.find('.examQuestionId').val();
+                row.remove();
+                prevRow.remove();
+                var url = '@Url.Action("DeleteQuestion", "Exams")';
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: url,
+                    data: {
+                        id: examQuestionId,
+                    },
+                    cache: false,
+                    success: function (result) {
+                        swal({
+                            title: "Succes",
+                            text: "Question Deleted",
+                            type: "danger",
+                            showCancelButton: false,
+                            buttonsStyling: !1,
+                            confirmButtonClass: "btn btn-primary",
+                            confirmButtonText: "Ok"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

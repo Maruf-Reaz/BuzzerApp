@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "PlayMcq";
+}
+
+<h1>PlayMcq</h1>
+
+<input class="form-control rounded-pill" type="button" name="option3" value="Start" />
+
+
+
+
+@section Scripts {
+    <script src="~/vendor/sweetalert2/dist/sweetalert2.min.js" asp-append-version="true"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#notAnsweredButton6').on('click', function () {
+
+            
+                connection.invoke("StartMcqs").catch(function (err) {
+
+                    return console.error(err.toString());
+
+                });
+                
+
+                });
+            var connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
+
+            connection.start().then(function () {
+
+            }).catch(function (err) {
+
+                return console.error(err.toString());
+            });
+
+            });
+
+
+    
+
+    </script>
+   
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
